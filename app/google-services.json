@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "620765646912",
+    "project_id": "yelpappfinal",
+    "storage_bucket": "yelpappfinal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620765646912:android:c5d1f1a3dc6b48afaacfa5",
+        "android_client_info": {
+          "package_name": "com.example.finalprojecttest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620765646912-ocsqn65l8rnpk26sqts3c4g935mmv7r0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.finalprojecttest",
+            "certificate_hash": "827499c94f8123dba5514d31221ccfcbc16caa6d"
+          }
+        },
+        {
+          "client_id": "620765646912-3crc3picmk9bqe4t4666ke7jg7ltjnj4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVDsHWIwqraHllWh6LtRroPU5SKQcFiLA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620765646912-3crc3picmk9bqe4t4666ke7jg7ltjnj4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

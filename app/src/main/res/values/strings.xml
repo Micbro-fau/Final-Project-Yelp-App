@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Final Project Test</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string-array name="category_array">
+        <item>Categories</item>
+        <item>Chinese (Restaurants)</item>
+        <item>Diners</item>
+        <item>Electronics</item>
+        <item>Sporting Goods</item>
+        <item>Pet Stores (Pets)</item>
+        <item>Orthodontists (Dentists)</item>
+        <item>Ice Cream And Frozen Yogurt (Food)</item>
+        <item>Bubble Tea (Food)</item>
+    </string-array>
+</resources>
