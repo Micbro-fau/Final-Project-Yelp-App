@@ -38,6 +38,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
         TextView number;
         TextView cost;
         TextView rating;
+        TextView FavoriteText;
         ImageButton GPS;
         ToggleButton Favorite;
 
@@ -50,6 +51,8 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
             rating = itemView.findViewById(R.id.rating);
             GPS = itemView.findViewById(R.id.GPS);
             Favorite = itemView.findViewById(R.id.Favorite);
+            FavoriteText = itemView.findViewById(R.id.FavoriteText);
+
 
             YelpData yelpData = YelpData.getInstance();
             //if the user isn't logged in, make the Favorite toggle invisible. If the user is logged in, make it visible
@@ -58,7 +61,6 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
             }else{
                 Favorite.setVisibility(View.VISIBLE);
             }
-
 
 
         }
@@ -80,12 +82,33 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ProgramAdapter.ViewHolder holder, int position){
+
+
         YelpData yelpData = YelpData.getInstance();
         String number[] = {"1.","2.","3.","4.","5."};
         holder.locationName.setText(yelpData.getResultNames()[position]);
         holder.cost.setText(yelpData.getResultPrice()[position]);
         holder.number.setText(number[position]);
         holder.rating.setText(valueOf(yelpData.getResultRatings()[position]));
+
+        //if the data field isn't filled, make every element invisible
+        if(yelpData.getResultNames()[position].equals("1")){
+            holder.Favorite.setVisibility(View.INVISIBLE);
+            holder.FavoriteText.setVisibility(View.INVISIBLE);
+            holder.locationName.setVisibility(View.INVISIBLE);
+            holder.number.setVisibility(View.INVISIBLE);
+            holder.cost.setVisibility(View.INVISIBLE);
+            holder.rating.setVisibility(View.INVISIBLE);
+            holder.GPS.setVisibility(View.INVISIBLE);
+        }else{
+            holder.Favorite.setVisibility(View.VISIBLE);
+            holder.FavoriteText.setVisibility(View.VISIBLE);
+            holder.locationName.setVisibility(View.VISIBLE);
+            holder.number.setVisibility(View.VISIBLE);
+            holder.cost.setVisibility(View.VISIBLE);
+            holder.rating.setVisibility(View.VISIBLE);
+            holder.GPS.setVisibility(View.VISIBLE);
+        }
 
         final int current = position;
         //if the GPS button is clicked, save the current lat, lon, and company name so it can be used on the Map fragment

@@ -162,4 +162,15 @@ public class YelpData {
     public void setDatabaseResults(Map<String, Object> tempNew){
         this.map = tempNew;
     }
+
+    //if the Favorites is being ran or not
+    public Boolean FavoritesRun = false;
+
+    public Boolean getFavoritesRun(){
+        return this.FavoritesRun;
+    }
+
+    public void setFavoritesRun(Boolean tempNew){
+        this.FavoritesRun = tempNew;
+    }
 }

@@ -68,8 +68,16 @@ public class HomeFragment extends Fragment {
 
                  */
                 YelpData yelpData = YelpData.getInstance();
+                yelpData.setFavoritesRun(true);
 
-
+                //wipes the data before any volleys are ran
+                yelpData.setResultNames(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultRatings(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultLat(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultLon(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultPrice(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultPhone(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultID(new String[]{"1", "1", "1", "1", "1"});
 
                 if(yelpData.getCurrentUserID().equals("1")){
                     //do not run this step
@@ -126,6 +134,16 @@ public class HomeFragment extends Fragment {
 
                 //gets the current favorite values IF the user is logged in. This is important to make sure that favorites do not overlap
                 YelpData yelpData = YelpData.getInstance();
+                yelpData.setFavoritesRun(false);
+
+                //wipes the data before any volleys are ran
+                yelpData.setResultNames(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultRatings(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultLat(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultLon(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultPrice(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultPhone(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultID(new String[]{"1", "1", "1", "1", "1"});
 
                 if(yelpData.getCurrentUserID().equals("1")){
                     //do not run this step
@@ -171,6 +189,16 @@ public class HomeFragment extends Fragment {
 
                 //gets the current favorite values IF the user is logged in. This is important to make sure that favorites do not overlap
                 YelpData yelpData = YelpData.getInstance();
+                yelpData.setFavoritesRun(false);
+
+                //wipes the data before any volleys are ran
+                yelpData.setResultNames(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultRatings(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultLat(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultLon(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultPrice(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultPhone(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultID(new String[]{"1", "1", "1", "1", "1"});
 
                 if(yelpData.getCurrentUserID().equals("1")){
                     //do not run this step
@@ -214,6 +242,16 @@ public class HomeFragment extends Fragment {
 
                 //gets the current favorite values IF the user is logged in. This is important to make sure that favorites do not overlap
                 YelpData yelpData = YelpData.getInstance();
+                yelpData.setFavoritesRun(false);
+
+                //wipes the data before any volleys are ran
+                yelpData.setResultNames(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultRatings(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultLat(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultLon(new double[]{1, 1, 1, 1, 1});
+                yelpData.setResultPrice(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultPhone(new String[]{"1", "1", "1", "1", "1"});
+                yelpData.setResultID(new String[]{"1", "1", "1", "1", "1"});
 
                 if(yelpData.getCurrentUserID().equals("1")){
                     //do not run this step

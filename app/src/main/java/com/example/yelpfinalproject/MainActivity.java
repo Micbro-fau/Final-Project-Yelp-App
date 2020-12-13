@@ -657,7 +657,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 resultLat[arrayCurrentValue] = parseDouble(coordinates.getString("latitude"));
                                 resultLon[arrayCurrentValue] = parseDouble(coordinates.getString("longitude"));
                                 resultRatings[arrayCurrentValue] = parseDouble(jsonObj.getString("rating"));
-                                resultPrice[arrayCurrentValue] = jsonObj.getString("price");
+                                //resultPrice[arrayCurrentValue] = jsonObj.getString("price");
                                 resultPhone[arrayCurrentValue] = jsonObj.getString("phone");
                                 resultID[arrayCurrentValue] = jsonObj.getString("id");
 
@@ -666,7 +666,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 yelpData.setResultRatingsSpecific(resultRatings[arrayCurrentValue],arrayCurrentValue);
                                 yelpData.setResultLatSpecific(resultLat[arrayCurrentValue],arrayCurrentValue);
                                 yelpData.setResultLonSpecific(resultLon[arrayCurrentValue],arrayCurrentValue);
-                                yelpData.setResultPriceSpecific(resultPrice[arrayCurrentValue],arrayCurrentValue);
+                                //yelpData.setResultPriceSpecific(resultPrice[arrayCurrentValue],arrayCurrentValue);
                                 yelpData.setResultPhoneSpecific(resultPhone[arrayCurrentValue],arrayCurrentValue);
                                 yelpData.setResultIDSpecific(resultID[arrayCurrentValue],arrayCurrentValue);
 

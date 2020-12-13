@@ -4,6 +4,8 @@ package com.example.yelpfinalproject.ui.dashboard;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
+        import android.widget.EditText;
+        import android.widget.TextView;
 
         import androidx.annotation.NonNull;
         import androidx.annotation.Nullable;
@@ -14,6 +16,7 @@ package com.example.yelpfinalproject.ui.dashboard;
         import androidx.recyclerview.widget.RecyclerView;
 
         import com.example.yelpfinalproject.R;
+        import com.example.yelpfinalproject.YelpData;
         import com.example.yelpfinalproject.ui.ProgramAdapter;
 
 public class DashboardFragment extends Fragment {
@@ -35,6 +38,17 @@ public class DashboardFragment extends Fragment {
             }
         });
         simpleList = (RecyclerView) root.findViewById(R.id.resultList); //ties the simpleList RecyclerView to the resultList ID on the fragment
+
+        YelpData yelpData = YelpData.getInstance();
+
+        //gives a title to the Results page determined if it is just a Search or if its a Favorites
+        final TextView searchText = (TextView) root.findViewById(R.id.resultTitle);
+        if(yelpData.getFavoritesRun() == false){
+            searchText.setText("Search Results");
+        }else{
+            searchText.setText("Favorites Results");
+        }
+
 
         layoutManager = new LinearLayoutManager(getContext());
         simpleList.setLayoutManager(layoutManager);
