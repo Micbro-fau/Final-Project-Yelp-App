@@ -105,12 +105,15 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
         //if the ID of the location is already in the database
         Map<String, Object> databaseResults = yelpData.getDatabaseResults();
         String pushReference = null;
-        if(databaseResults.containsValue(yelpData.getResultID()[current]) == true) {
-            //make the toggle on
-            holder.Favorite.setChecked(true);
-            //and saves the Push value. This is necessary if the favorite wants to be deleted on a reload
+        if(yelpData.getCurrentUserID() != "1"){ //if an account is currently logged in
+            if(databaseResults.containsValue(yelpData.getResultID()[current]) == true) { //if the Location ID already exists in the Firebase Database
+                //make the toggle on
+                holder.Favorite.setChecked(true);
+                //and saves the Push value. This is necessary if the favorite wants to be deleted on a reload
 
+            }
         }
+
             holder.Favorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 YelpData yelpData = YelpData.getInstance();
 

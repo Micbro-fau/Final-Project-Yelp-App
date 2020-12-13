@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         if(category.equals("Categories")){
             Toast.makeText(getApplicationContext(), "Pick a Category", Toast.LENGTH_LONG).show();
         } else if(category.equals("Chinese (Restaurants)")) {
-            Toast.makeText(getApplicationContext(), "Chinese Was Selected", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Chinese Was Selected", Toast.LENGTH_LONG).show();
             CategoryConverted = "chinese";
             urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted;
         } else if(category.equals("Diners")){
@@ -458,7 +458,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             if(category.equals("Categories")){
                 Toast.makeText(getApplicationContext(), "Pick a Category", Toast.LENGTH_LONG).show();
             } else if(category.equals("Chinese (Restaurants)")) {
-                Toast.makeText(getApplicationContext(), "Chinese Was Selected", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Chinese Was Selected", Toast.LENGTH_LONG).show();
                 CategoryConverted = "chinese";
                 urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted;
             } else if(category.equals("Diners")){
