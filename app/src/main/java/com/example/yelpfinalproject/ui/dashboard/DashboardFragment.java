@@ -24,8 +24,6 @@ public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
 
-    String number[] = {"1.","2.","3.","4.","5."};
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
@@ -36,8 +34,7 @@ public class DashboardFragment extends Fragment {
             public void onChanged(@Nullable String s) {
             }
         });
-        simpleList = (RecyclerView) root.findViewById(R.id.resultList);
-        //simpleList.setHasFixedSize(true);
+        simpleList = (RecyclerView) root.findViewById(R.id.resultList); //ties the simpleList RecyclerView to the resultList ID on the fragment
 
         layoutManager = new LinearLayoutManager(getContext());
         simpleList.setLayoutManager(layoutManager);

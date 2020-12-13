@@ -19,7 +19,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.yelpfinalproject.MainActivity;
 import com.example.yelpfinalproject.R;
+import com.example.yelpfinalproject.YelpData;
 import com.example.yelpfinalproject.ui.dashboard.DashboardFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
+
+import static java.lang.String.valueOf;
 
 public class HomeFragment extends Fragment {
 
@@ -35,15 +45,6 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
-       // final TextView textView = root.findViewById(R.id.text_home);
-        /*
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                //textView.setText(s);
-            }
-        });
-         */
         //Category Spinner code
         final Spinner spinner = (Spinner) root.findViewById(R.id.category);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -54,16 +55,58 @@ public class HomeFragment extends Fragment {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-
-
-
         //Activating a Fragment Switch when the Favorites button is pressed
         FavoritesButton = (Button) root.findViewById(R.id.FavoritesButton);
         FavoritesButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
+
+                //insert way to update search data with Favorites stored in the Firebase Database
+                /*
                 Fragment fragment = null;
                 fragment = new DashboardFragment();
                 replaceFragment(fragment);
+
+                 */
+                YelpData yelpData = YelpData.getInstance();
+
+
+
+                if(yelpData.getCurrentUserID().equals("1")){
+                    //do not run this step
+                }else{
+
+
+                    //removes the dummy values established when an user first logs in
+                    DatabaseReference refInit = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites").child("12345");
+                    refInit.removeValue();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites");
+
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                            YelpData yelpData = YelpData.getInstance();
+                            yelpData.setDatabaseResults(map);
+
+                            int i = 0;
+                                for (Object o : map.keySet()) {
+                                    if(i != map.size()){ //put here to skip the dummy value at the beginning of every user
+                                        MainActivity main = (MainActivity) getActivity();
+                                        main.yelpFavoriteReturn(valueOf(map.get(o)),i);
+                                    }
+                                    i++;
+                                }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
 
 
             }
@@ -80,6 +123,33 @@ public class HomeFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View arg0) {
+
+                //gets the current favorite values IF the user is logged in. This is important to make sure that favorites do not overlap
+                YelpData yelpData = YelpData.getInstance();
+
+                if(yelpData.getCurrentUserID().equals("1")){
+                    //do not run this step
+                }else{
+                    DatabaseReference refInit = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites").child("12345");
+                    refInit.setValue("dummy");
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites");
+
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                            YelpData yelpData = YelpData.getInstance();
+                            yelpData.setDatabaseResults(map);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
 
                 String value = searchText.getText().toString(); //gets the data from the text bar
 
@@ -99,8 +169,34 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View arg0) {
 
+                //gets the current favorite values IF the user is logged in. This is important to make sure that favorites do not overlap
+                YelpData yelpData = YelpData.getInstance();
+
+                if(yelpData.getCurrentUserID().equals("1")){
+                    //do not run this step
+                }else{
+                    DatabaseReference refInit = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites").child("12345");
+                    refInit.setValue("dummy");
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites");
+
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                            YelpData yelpData = YelpData.getInstance();
+                            yelpData.setDatabaseResults(map);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
                 String value = searchText2.getText().toString(); //gets the data from the text bar
-                String text = spinner.getSelectedItem().toString();
+                String text = spinner.getSelectedItem().toString(); //gets the current spinner value
 
                 MainActivity main = (MainActivity) getActivity();
                 main.yelpSearchCategory(value,text); //sends text field string to HomeSearch located in the main activity
@@ -116,6 +212,34 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View arg0) {
 
+                //gets the current favorite values IF the user is logged in. This is important to make sure that favorites do not overlap
+                YelpData yelpData = YelpData.getInstance();
+
+                if(yelpData.getCurrentUserID().equals("1")){
+                    //do not run this step
+                }else{
+
+                    DatabaseReference refInit = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites").child("12345");
+                    refInit.setValue("dummy");
+
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites");
+
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                            YelpData yelpData = YelpData.getInstance();
+                            yelpData.setDatabaseResults(map);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
                 String text = spinner.getSelectedItem().toString();
 
                 MainActivity main = (MainActivity) getActivity();
@@ -130,7 +254,6 @@ public class HomeFragment extends Fragment {
     }
 
     public void replaceFragment(Fragment someFragment) {
-        //FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.navigation_dashboard, someFragment);
         transaction.addToBackStack(null);

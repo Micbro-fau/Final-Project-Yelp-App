@@ -74,10 +74,10 @@ public class NotificationsFragment extends Fragment {
                     }
                 };
                 YelpData y = YelpData.getInstance();
-                Double lat = y.getCurrentLat();
-                Double lon =  y.getCurrentLon();
-                //Toast.makeText(getActivity(), String.valueOf(lat) +" " + String.valueOf(lon),Toast.LENGTH_SHORT).show();
-                LatLng loc = new LatLng(lat,lon);
+
+                //sets the Lat and Lon of the Map to the Current Lat and Current Lon determined by the GPS button on the search results
+                LatLng loc = new LatLng(y.getCurrentLat(),y.getCurrentLon());
+                //sets the tag based on the Lat and Lon & makes the tag the location of the current business determined by the GPS button on the search results
                 googleMap.addMarker(new MarkerOptions().position(loc).title(y.getCurrentLocationName()));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
                 googleMap.moveCamera(CameraUpdateFactory.zoomTo(12));

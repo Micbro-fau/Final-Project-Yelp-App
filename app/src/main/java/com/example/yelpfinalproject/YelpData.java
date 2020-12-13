@@ -1,5 +1,7 @@
 package com.example.yelpfinalproject;
 
+import java.util.Map;
+
 public class YelpData {
 
 
@@ -19,6 +21,10 @@ public class YelpData {
         this.resultNames = tempNew;
     }
 
+    public void setResultNamesSpecific(String tempNew, int tempNew2){
+        this.resultNames[tempNew2] = tempNew;
+    }
+
     private double[] resultRatings = {1,1,1,1,1};
 
     public double[] getResultRatings(){
@@ -27,6 +33,10 @@ public class YelpData {
 
     public void setResultRatings(double[] tempNew){
         this.resultRatings = tempNew;
+    }
+
+    public void setResultRatingsSpecific(double tempNew, int tempNew2){
+        this.resultRatings[tempNew2] = tempNew;
     }
 
     private double[] resultLat = {1,1,1,1,1};
@@ -39,6 +49,10 @@ public class YelpData {
         this.resultLat = tempNew;
     }
 
+    public void setResultLatSpecific(double tempNew, int tempNew2){
+        this.resultLat[tempNew2] = tempNew;
+    }
+
     private double[] resultLon = {1,1,1,1,1};
 
     public double[] getResultLon(){
@@ -47,6 +61,10 @@ public class YelpData {
 
     public void setResultLon(double[] tempNew){
         this.resultLon = tempNew;
+    }
+
+    public void setResultLonSpecific(double tempNew, int tempNew2){
+        this.resultLon[tempNew2] = tempNew;
     }
 
     private String[] resultPrice = {"1","1","1","1","1"};
@@ -59,6 +77,10 @@ public class YelpData {
         this.resultPrice = tempNew;
     }
 
+    public void setResultPriceSpecific(String tempNew, int tempNew2){
+        this.resultPrice[tempNew2] = tempNew;
+    }
+
     private String[] resultPhone = {"1","1","1","1","1"};
 
     public String[] getResultPhone(){
@@ -67,6 +89,25 @@ public class YelpData {
 
     public void setResultPhone(String[] tempNew){
         this.resultPrice = tempNew;
+    }
+
+    public void setResultPhoneSpecific(String tempNew, int tempNew2){
+        this.resultPrice[tempNew2] = tempNew;
+    }
+
+    //IDs of all the locations currently loaded. It is necessary for the Favorite saving functionality
+    private String[] resultID = {"1","1","1","1","1"};
+
+    public String[] getResultID(){
+        return this.resultID;
+    }
+
+    public void setResultID(String[] tempNew){
+        this.resultID = tempNew;
+    }
+
+    public void setResultIDSpecific(String tempNew, int tempNew2){
+        this.resultID[tempNew2] = tempNew;
     }
 
     //current Latitude and Longitude for the Map usage & Current Location Name for the map
@@ -98,5 +139,27 @@ public class YelpData {
 
     public void setCurrentLocationName(String tempNew){
         this.currentLocationName = tempNew;
+    }
+
+    //gets the current UserID. This information is wiped on Log Out
+    public String currentUserID = "1";
+
+    public String getCurrentUserID(){
+        return this.currentUserID;
+    }
+
+    public void setCurrentUserID(String tempNew){
+        this.currentUserID = tempNew;
+    }
+
+    //gets the results from the database
+    public Map<String, Object> map;
+
+    public Map<String, Object> getDatabaseResults(){
+        return this.map;
+    }
+
+    public void setDatabaseResults(Map<String, Object> tempNew){
+        this.map = tempNew;
     }
 }
