@@ -95,6 +95,20 @@ public class YelpData {
         this.resultPrice[tempNew2] = tempNew;
     }
 
+    private String[] resultAddress = {"1","1","1","1","1"};
+
+    public String[] getResultAddress(){
+        return this.resultAddress;
+    }
+
+    public void setResultAddress(String[] tempNew){
+        this.resultAddress = tempNew;
+    }
+
+    public void setResultAddressSpecific(String tempNew, int tempNew2){
+        this.resultAddress[tempNew2] = tempNew;
+    }
+
     //IDs of all the locations currently loaded. It is necessary for the Favorite saving functionality
     private String[] resultID = {"1","1","1","1","1"};
 

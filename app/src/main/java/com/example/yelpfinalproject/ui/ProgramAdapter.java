@@ -39,6 +39,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
         TextView cost;
         TextView rating;
         TextView FavoriteText;
+        TextView Address;
         ImageButton GPS;
         ToggleButton Favorite;
 
@@ -52,7 +53,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
             GPS = itemView.findViewById(R.id.GPS);
             Favorite = itemView.findViewById(R.id.Favorite);
             FavoriteText = itemView.findViewById(R.id.FavoriteText);
-
+            Address = itemView.findViewById(R.id.address);
 
             YelpData yelpData = YelpData.getInstance();
             //if the user isn't logged in, make the Favorite toggle invisible. If the user is logged in, make it visible
@@ -90,6 +91,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
         holder.cost.setText(yelpData.getResultPrice()[position]);
         holder.number.setText(number[position]);
         holder.rating.setText(valueOf(yelpData.getResultRatings()[position]));
+        holder.Address.setText(yelpData.getResultAddress()[position]);
 
         //if the data field isn't filled, make every element invisible
         if(yelpData.getResultNames()[position].equals("1")){
@@ -100,6 +102,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
             holder.cost.setVisibility(View.INVISIBLE);
             holder.rating.setVisibility(View.INVISIBLE);
             holder.GPS.setVisibility(View.INVISIBLE);
+            holder.Address.setVisibility(View.INVISIBLE);
         }else{
             holder.Favorite.setVisibility(View.VISIBLE);
             holder.FavoriteText.setVisibility(View.VISIBLE);
@@ -108,6 +111,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
             holder.cost.setVisibility(View.VISIBLE);
             holder.rating.setVisibility(View.VISIBLE);
             holder.GPS.setVisibility(View.VISIBLE);
+            holder.Address.setVisibility(View.VISIBLE);
         }
 
         final int current = position;

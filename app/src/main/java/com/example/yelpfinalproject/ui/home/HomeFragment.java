@@ -57,6 +57,13 @@ public class HomeFragment extends Fragment {
 
         //Activating a Fragment Switch when the Favorites button is pressed
         FavoritesButton = (Button) root.findViewById(R.id.FavoritesButton);
+        YelpData yelpData = YelpData.getInstance();
+
+        if(yelpData.getCurrentUserID().equals("1")){
+            FavoritesButton.setVisibility(View.INVISIBLE);
+        }else{
+            FavoritesButton.setVisibility(View.VISIBLE);
+        }
         FavoritesButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
 
@@ -114,9 +121,6 @@ public class HomeFragment extends Fragment {
                         }
                     });
                 }
-
-
-
             }
         });
 

@@ -54,6 +54,7 @@ import java.util.Map;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
+import static java.lang.String.valueOf;
 
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void yelpSearchName(String search){
+        Toast.makeText(getApplicationContext(), "Finding " + search + " around your location", Toast.LENGTH_LONG).show();
 
         gps = new GPSTracker(MainActivity.this);
 
@@ -131,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
             urlSearch = "https://api.yelp.com/v3/businesses/search?term=" + search + "&latitude=" + latitude + "&longitude=" + longitude;
-            //urlSearch = "https://api.yelp.com/v3/businesses/search?term=delis&latitude=37.786882&longitude=-122.399972";
 
 
         queue.start();
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             String [] resultPrice = {"1","1","1","1","1"};
                             String [] resultPhone = {"1","1","1","1","1"};
                             String [] resultID = {"1","1","1","1","1"};
-
+                            String [] resultAddress = {"1","1","1","1","1"};
 
                             jsonObj = new JSONObject(response);
                             JSONArray businessJSON = jsonObj.getJSONArray("businesses");
@@ -167,6 +168,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             //resultPrice[0] = business.getString("price");
                             resultPhone[0] = business.getString("phone");
                             resultID[0] = business.getString("id");
+                            JSONObject location = business.getJSONObject("location");
+                            resultAddress[0] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
                             //second result
                             business = businessJSON.getJSONObject(1);
@@ -178,6 +182,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             //resultPrice[1] = business.getString("price");
                             resultPhone[1] = business.getString("phone");
                             resultID[1] = business.getString("id");
+                            location = business.getJSONObject("location");
+                            resultAddress[1] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
 
                             //third result
@@ -190,6 +197,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             //resultPrice[2] = business.getString("price");
                             resultPhone[2] = business.getString("phone");
                             resultID[2] = business.getString("id");
+                            location = business.getJSONObject("location");
+                            resultAddress[2] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
                             //fourth result
                             business = businessJSON.getJSONObject(3);
@@ -201,6 +211,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             //resultPrice[3] = business.getString("price");
                             resultPhone[3] = business.getString("phone");
                             resultID[3] = business.getString("id");
+                            location = business.getJSONObject("location");
+                            resultAddress[3] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
 
                             //fifth result
                             business = businessJSON.getJSONObject(4);
@@ -212,6 +224,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             //resultPrice[4] = business.getString("price");
                             resultPhone[4] = business.getString("phone");
                             resultID[4] = business.getString("id");
+                            location = business.getJSONObject("location");
+                            resultAddress[4] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
 
                             yelpData.setResultNames(resultNames);
@@ -221,6 +236,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             yelpData.setResultPrice(resultPrice);
                             yelpData.setResultPhone(resultPhone);
                             yelpData.setResultID(resultID);
+                            yelpData.setResultAddress(resultAddress);
+
 
                         }catch (final JSONException e) {
                             Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -264,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     //triggered on the bottom search button
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void yelpSearchCategory (String location, String category){
+        Toast.makeText(getApplicationContext(), "Getting Areas in Category " + category + " around " + location, Toast.LENGTH_LONG).show();
 
             //Start of Volley Code
             RequestQueue queue;
@@ -325,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 String [] resultPrice = {"1","1","1","1","1"};
                                 String [] resultPhone = {"1","1","1","1","1"};
                                 String [] resultID = {"1","1","1","1","1"};
-
+                                String [] resultAddress = {"1","1","1","1","1"};
 
                                 jsonObj = new JSONObject(response);
                                 JSONArray businessJSON = jsonObj.getJSONArray("businesses");
@@ -341,6 +359,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //resultPrice[0] = business.getString("price");
                                 resultPhone[0] = business.getString("phone");
                                 resultID[0] = business.getString("id");
+                                JSONObject location = business.getJSONObject("location");
+                                resultAddress[0] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
                                 //second result
                                 business = businessJSON.getJSONObject(1);
@@ -352,6 +373,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //resultPrice[1] = business.getString("price");
                                 resultPhone[1] = business.getString("phone");
                                 resultID[1] = business.getString("id");
+                                location = business.getJSONObject("location");
+                                resultAddress[1] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
 
                                 //third result
@@ -364,6 +388,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //resultPrice[2] = business.getString("price");
                                 resultPhone[2] = business.getString("phone");
                                 resultID[2] = business.getString("id");
+                                location = business.getJSONObject("location");
+                                resultAddress[2] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
                                 //fourth result
                                 business = businessJSON.getJSONObject(3);
@@ -375,6 +402,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //resultPrice[3] = business.getString("price");
                                 resultPhone[3] = business.getString("phone");
                                 resultID[3] = business.getString("id");
+                                location = business.getJSONObject("location");
+                                resultAddress[3] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
 
                                 //fifth result
                                 business = businessJSON.getJSONObject(4);
@@ -386,6 +415,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //resultPrice[4] = business.getString("price");
                                 resultPhone[4] = business.getString("phone");
                                 resultID[4] = business.getString("id");
+                                location = business.getJSONObject("location");
+                                resultAddress[4] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
 
                                 yelpData.setResultNames(resultNames);
@@ -395,6 +427,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 yelpData.setResultPrice(resultPrice);
                                 yelpData.setResultPhone(resultPhone);
                                 yelpData.setResultID(resultID);
+                                yelpData.setResultAddress(resultAddress);
+
 
                             }catch (final JSONException e) {
                                 Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -432,6 +466,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @RequiresApi(api = Build.VERSION_CODES.O)
     //Function that is called when the Category's GPS button is pressed
     public void yelpSearchCategoryGPS(String category){
+        Toast.makeText(getApplicationContext(), "Getting Areas in Category " + category + " around your location", Toast.LENGTH_LONG).show();
 
         gps = new GPSTracker(MainActivity.this);
 
@@ -501,7 +536,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 String [] resultPrice = {"1","1","1","1","1"};
                                 String [] resultPhone = {"1","1","1","1","1"};
                                 String [] resultID = {"1","1","1","1","1"};
-
+                                String [] resultAddress = {"1","1","1","1","1"};
 
                                 jsonObj = new JSONObject(response);
                                 JSONArray businessJSON = jsonObj.getJSONArray("businesses");
@@ -517,6 +552,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //resultPrice[0] = business.getString("price");
                                 resultPhone[0] = business.getString("phone");
                                 resultID[0] = business.getString("id");
+                                JSONObject location = business.getJSONObject("location");
+                                resultAddress[0] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
                                 //second result
                                 business = businessJSON.getJSONObject(1);
@@ -528,6 +566,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //resultPrice[1] = business.getString("price");
                                 resultPhone[1] = business.getString("phone");
                                 resultID[1] = business.getString("id");
+                                location = business.getJSONObject("location");
+                                resultAddress[1] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
 
                                 //third result
@@ -540,6 +581,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //resultPrice[2] = business.getString("price");
                                 resultPhone[2] = business.getString("phone");
                                 resultID[2] = business.getString("id");
+                                location = business.getJSONObject("location");
+                                resultAddress[2] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
                                 //fourth result
                                 business = businessJSON.getJSONObject(3);
@@ -551,6 +595,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //resultPrice[3] = business.getString("price");
                                 resultPhone[3] = business.getString("phone");
                                 resultID[3] = business.getString("id");
+                                location = business.getJSONObject("location");
+                                resultAddress[3] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
 
                                 //fifth result
                                 business = businessJSON.getJSONObject(4);
@@ -562,6 +608,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //resultPrice[4] = business.getString("price");
                                 resultPhone[4] = business.getString("phone");
                                 resultID[4] = business.getString("id");
+                                location = business.getJSONObject("location");
+                                resultAddress[4] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
 
                                 yelpData.setResultNames(resultNames);
@@ -571,6 +620,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 yelpData.setResultPrice(resultPrice);
                                 yelpData.setResultPhone(resultPhone);
                                 yelpData.setResultID(resultID);
+                                yelpData.setResultAddress(resultAddress);
+
 
                             }catch (final JSONException e) {
                                 Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -612,8 +663,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     public void yelpFavoriteReturn(String ID, final int arrayCurrentValue){
+        Toast.makeText(getApplicationContext(), "Getting Favorites", Toast.LENGTH_LONG).show();
 
-            RequestQueue queue;
+        RequestQueue queue;
             Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
 
             // Set up the network to use HttpURLConnection as the HTTP client.
@@ -648,6 +700,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 String [] resultPrice = {"1","1","1","1","1"};
                                 String [] resultPhone = {"1","1","1","1","1"};
                                 String [] resultID = {"1","1","1","1","1"};
+                                String [] resultAddress = {"1","1","1","1","1"};
 
 
                                 jsonObj = new JSONObject(response);
@@ -660,6 +713,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //resultPrice[arrayCurrentValue] = jsonObj.getString("price");
                                 resultPhone[arrayCurrentValue] = jsonObj.getString("phone");
                                 resultID[arrayCurrentValue] = jsonObj.getString("id");
+                                JSONObject location = jsonObj.getJSONObject("location");
+                                resultAddress[arrayCurrentValue] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+
 
                                 //this Yelp call has "specific" function setters in order to be able to search for each Favorite ID individually
                                 yelpData.setResultNamesSpecific(resultNames[arrayCurrentValue],arrayCurrentValue);
@@ -669,6 +725,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 //yelpData.setResultPriceSpecific(resultPrice[arrayCurrentValue],arrayCurrentValue);
                                 yelpData.setResultPhoneSpecific(resultPhone[arrayCurrentValue],arrayCurrentValue);
                                 yelpData.setResultIDSpecific(resultID[arrayCurrentValue],arrayCurrentValue);
+                                yelpData.setResultAddressSpecific(resultAddress[arrayCurrentValue],arrayCurrentValue);
 
                             }catch (final JSONException e) {
                                 Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -748,14 +805,33 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             signOutButton = (Button) findViewById(R.id.signOutButton);
             signOutButton.setVisibility(View.VISIBLE);
 
-            Toast.makeText(getApplicationContext(), "Hello, " + acct.getDisplayName(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Hello, " + acct.getDisplayName() + ". You now have access to Favorites! ", Toast.LENGTH_LONG).show();
 
             //gets the current UserID and saves it so it can be used in the Favorites implementation
             YelpData yelpData = YelpData.getInstance();
             yelpData.setCurrentUserID(acct.getId());
 
+            //removes the dummy values established when an user first logs in
+            DatabaseReference refInit = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites").child("12345");
+            refInit.setValue("dummy");
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites");
 
+            //makes the map database be found on launch. this is necessary to fix a null object reference issue, but the database will be scanned again on Favorite press
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
+                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                    YelpData yelpData = YelpData.getInstance();
+                    yelpData.setDatabaseResults(map);
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 
         }else{
 
