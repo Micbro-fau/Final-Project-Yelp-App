@@ -1,6 +1,8 @@
 package com.example.yelpfinalproject;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -63,12 +66,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     SignInButton signInButton;
     Button signOutButton;
 
+
+
     //for Volley code
     private static JSONObject jsonObj;
 
     String urlSearch;
 
     GPSTracker gps;
+    private static final int REQUEST_CODE_PERMISSION = 2;
+    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -105,6 +112,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         signOutButton.setVisibility(View.GONE); //sets its visibility as GONE initally so you are forced to sign in
 
 
+        //GPS Location Permissions Prompt
+        try {
+            if (ActivityCompat.checkSelfPermission(this, mPermission)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(this, new String[]{mPermission},
+                        REQUEST_CODE_PERMISSION);
+
+                // If any permission above not allowed by user, this condition will execute every time, else your else part will work
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
