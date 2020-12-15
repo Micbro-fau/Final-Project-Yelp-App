@@ -50,18 +50,9 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
             number = itemView.findViewById(R.id.number);
             cost = itemView.findViewById(R.id.cost);
             rating = itemView.findViewById(R.id.rating);
-            GPS = itemView.findViewById(R.id.GPS);
             Favorite = itemView.findViewById(R.id.Favorite);
             FavoriteText = itemView.findViewById(R.id.FavoriteText);
             Address = itemView.findViewById(R.id.address);
-
-            YelpData yelpData = YelpData.getInstance();
-            //if the user isn't logged in, make the Favorite toggle invisible. If the user is logged in, make it visible
-            if(yelpData.getCurrentUserID().equals("1")){
-                Favorite.setVisibility(View.INVISIBLE);
-            }else{
-                Favorite.setVisibility(View.VISIBLE);
-            }
 
 
         }
@@ -101,7 +92,6 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
             holder.number.setVisibility(View.INVISIBLE);
             holder.cost.setVisibility(View.INVISIBLE);
             holder.rating.setVisibility(View.INVISIBLE);
-            holder.GPS.setVisibility(View.INVISIBLE);
             holder.Address.setVisibility(View.INVISIBLE);
         }else{
             holder.Favorite.setVisibility(View.VISIBLE);
@@ -110,24 +100,10 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
             holder.number.setVisibility(View.VISIBLE);
             holder.cost.setVisibility(View.VISIBLE);
             holder.rating.setVisibility(View.VISIBLE);
-            holder.GPS.setVisibility(View.VISIBLE);
             holder.Address.setVisibility(View.VISIBLE);
         }
 
         final int current = position;
-        //if the GPS button is clicked, save the current lat, lon, and company name so it can be used on the Map fragment
-        holder.GPS.setOnClickListener(new View.OnClickListener() {
-
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View arg0) {
-                YelpData yelpData = YelpData.getInstance();
-                yelpData.setCurrentLat(yelpData.getResultLat()[current]);
-                yelpData.setCurrentLon(yelpData.getResultLon()[current]);
-                yelpData.setCurrentLocationName(yelpData.getResultNames()[current]);
-
-            }
-        });
 
         //if the ID of the location is already in the database
         Map<String, Object> databaseResults = yelpData.getDatabaseResults();
@@ -137,8 +113,10 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ViewHold
                 //make the toggle on
                 holder.Favorite.setChecked(true);
                 //and saves the Push value. This is necessary if the favorite wants to be deleted on a reload
-
             }
+        }else{ //if an user isn't logged in, make the favorite area invisible
+            holder.Favorite.setVisibility(View.INVISIBLE);
+            holder.FavoriteText.setVisibility(View.INVISIBLE);
         }
 
             holder.Favorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

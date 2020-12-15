@@ -125,61 +125,7 @@ public class HomeFragment extends Fragment {
         });
 
 
-        //Name Search Button
-        NameSearch = (ImageButton) root.findViewById(R.id.NameSearchButton);
-
-        final EditText searchText = (EditText) root.findViewById(R.id.NameSearch);
-
-        NameSearch.setOnClickListener(new View.OnClickListener() {
-
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View arg0) {
-
-                //gets the current favorite values IF the user is logged in. This is important to make sure that favorites do not overlap
-                YelpData yelpData = YelpData.getInstance();
-                yelpData.setFavoritesRun(false);
-
-                //wipes the data before any volleys are ran
-                yelpData.setResultNames(new String[]{"1", "1", "1", "1", "1"});
-                yelpData.setResultRatings(new double[]{1, 1, 1, 1, 1});
-                yelpData.setResultLat(new double[]{1, 1, 1, 1, 1});
-                yelpData.setResultLon(new double[]{1, 1, 1, 1, 1});
-                yelpData.setResultPrice(new String[]{"1", "1", "1", "1", "1"});
-                yelpData.setResultPhone(new String[]{"1", "1", "1", "1", "1"});
-                yelpData.setResultID(new String[]{"1", "1", "1", "1", "1"});
-
-                if(yelpData.getCurrentUserID().equals("1")){
-                    //do not run this step
-                }else{
-                    DatabaseReference refInit = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites").child("12345");
-                    refInit.setValue("dummy");
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("userData").child(yelpData.getCurrentUserID()).child("Favorites");
-
-                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                            YelpData yelpData = YelpData.getInstance();
-                            yelpData.setDatabaseResults(map);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-
-
-                String value = searchText.getText().toString(); //gets the data from the text bar
-
-                MainActivity main = (MainActivity) getActivity();
-                main.yelpSearchName(value); //sends text field string to HomeSearch located in the main activity
-
-            }
-        });
+        final EditText searchText = (EditText) root.findViewById(R.id.NameSearch); //Name/Title location
 
         //Category Search Button
         CategorySearch = (ImageButton) root.findViewById(R.id.LocationSearchButton);
@@ -227,11 +173,12 @@ public class HomeFragment extends Fragment {
                     });
                 }
 
-                String value = searchText2.getText().toString(); //gets the data from the text bar
+                String value = searchText2.getText().toString(); //gets the data from the City/State text bar
                 String text = spinner.getSelectedItem().toString(); //gets the current spinner value
+                String name = searchText.getText().toString(); //gets the data from the Name/Title text bar
 
                 MainActivity main = (MainActivity) getActivity();
-                main.yelpSearchCategory(value,text); //sends text field string to HomeSearch located in the main activity
+                main.yelpSearchCategory(value,text,name); //sends text field string to HomeSearch located in the main activity
 
             }
         });
@@ -283,9 +230,10 @@ public class HomeFragment extends Fragment {
                 }
 
                 String text = spinner.getSelectedItem().toString();
+                String name = searchText.getText().toString(); //gets the data from the Name/Title text bar
 
                 MainActivity main = (MainActivity) getActivity();
-                main.yelpSearchCategoryGPS(text); //sends text field string to HomeSearch located in the main activity
+                main.yelpSearchCategoryGPS(text,name); //sends text field string to HomeSearch located in the main activity
 
             }
         });

@@ -128,179 +128,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void yelpSearchName(String search){
-        Toast.makeText(getApplicationContext(), "Finding " + search + " around your location", Toast.LENGTH_LONG).show();
-
-        gps = new GPSTracker(MainActivity.this);
-
-        // check if GPS enabled
-        if(gps.canGetLocation()){
-
-            final double latitude = gps.getLatitude();
-            final double longitude = gps.getLongitude();
-        //Start of Volley Code
-        RequestQueue queue;
-        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
-
-        // Set up the network to use HttpURLConnection as the HTTP client.
-        Network network = new BasicNetwork(new HurlStack());
-        // Making a request to url and getting response
-        queue = new RequestQueue(cache,network);
-
-        boolean valueResult;
-        //checks if the string is numeric or not
-
-
-            urlSearch = "https://api.yelp.com/v3/businesses/search?term=" + search + "&latitude=" + latitude + "&longitude=" + longitude;
-
-
-        queue.start();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlSearch,
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        //textView.setText("Response is: "+ response.substring(0,500));
-                        try {
-                            YelpData yelpData = YelpData.getInstance();
-                            String [] resultNames = {"1","1","1","1","1"};
-                            double [] resultRatings = {1,1,1,1,1};
-                            double [] resultLon = {1,1,1,1,1};
-                            double [] resultLat = {1,1,1,1,1};
-                            String [] resultPrice = {"1","1","1","1","1"};
-                            String [] resultPhone = {"1","1","1","1","1"};
-                            String [] resultID = {"1","1","1","1","1"};
-                            String [] resultAddress = {"1","1","1","1","1"};
-
-                            jsonObj = new JSONObject(response);
-                            JSONArray businessJSON = jsonObj.getJSONArray("businesses");
-
-                            //first result
-                            JSONObject business = businessJSON.getJSONObject(0);
-                            resultNames[0] = business.getString("name");
-                            resultRatings[0] = parseDouble(business.getString("rating"));
-                            JSONObject coordinates = business.getJSONObject("coordinates");
-                            resultLat[0] = parseDouble(coordinates.getString("latitude"));
-                            resultLon[0] = parseDouble(coordinates.getString("longitude"));
-                            resultRatings[0] = parseDouble(business.getString("rating"));
-                            //resultPrice[0] = business.getString("price");
-                            resultPhone[0] = business.getString("phone");
-                            resultID[0] = business.getString("id");
-                            JSONObject location = business.getJSONObject("location");
-                            resultAddress[0] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
-
-
-                            //second result
-                            business = businessJSON.getJSONObject(1);
-                            resultNames[1] = business.getString("name");
-                            resultRatings[1] = parseDouble(business.getString("rating"));
-                            coordinates = business.getJSONObject("coordinates");
-                            resultLat[1] = parseDouble(coordinates.getString("latitude"));
-                            resultLon[1] = parseDouble(coordinates.getString("longitude"));
-                            //resultPrice[1] = business.getString("price");
-                            resultPhone[1] = business.getString("phone");
-                            resultID[1] = business.getString("id");
-                            location = business.getJSONObject("location");
-                            resultAddress[1] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
-
-
-
-                            //third result
-                            business = businessJSON.getJSONObject(2);
-                            resultNames[2] = business.getString("name");
-                            resultRatings[2] = parseDouble(business.getString("rating"));
-                            coordinates = business.getJSONObject("coordinates");
-                            resultLat[2] = parseDouble(coordinates.getString("latitude"));
-                            resultLon[2] = parseDouble(coordinates.getString("longitude"));
-                            //resultPrice[2] = business.getString("price");
-                            resultPhone[2] = business.getString("phone");
-                            resultID[2] = business.getString("id");
-                            location = business.getJSONObject("location");
-                            resultAddress[2] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
-
-
-                            //fourth result
-                            business = businessJSON.getJSONObject(3);
-                            resultNames[3] = business.getString("name");
-                            resultRatings[3] = parseDouble(business.getString("rating"));
-                            coordinates = business.getJSONObject("coordinates");
-                            resultLat[3] = parseDouble(coordinates.getString("latitude"));
-                            resultLon[3] = parseDouble(coordinates.getString("longitude"));
-                            //resultPrice[3] = business.getString("price");
-                            resultPhone[3] = business.getString("phone");
-                            resultID[3] = business.getString("id");
-                            location = business.getJSONObject("location");
-                            resultAddress[3] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
-
-                            //fifth result
-                            business = businessJSON.getJSONObject(4);
-                            resultNames[4] = business.getString("name");
-                            resultRatings[4] = parseDouble(business.getString("rating"));
-                            coordinates = business.getJSONObject("coordinates");
-                            resultLat[4] = parseDouble(coordinates.getString("latitude"));
-                            resultLon[4] = parseDouble(coordinates.getString("longitude"));
-                            //resultPrice[4] = business.getString("price");
-                            resultPhone[4] = business.getString("phone");
-                            resultID[4] = business.getString("id");
-                            location = business.getJSONObject("location");
-                            resultAddress[4] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
-
-
-
-                            yelpData.setResultNames(resultNames);
-                            yelpData.setResultRatings(resultRatings);
-                            yelpData.setResultLat(resultLat);
-                            yelpData.setResultLon(resultLon);
-                            yelpData.setResultPrice(resultPrice);
-                            yelpData.setResultPhone(resultPhone);
-                            yelpData.setResultID(resultID);
-                            yelpData.setResultAddress(resultAddress);
-
-
-                        }catch (final JSONException e) {
-                            Log.e(TAG, "Json parsing error: " + e.getMessage());
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getApplicationContext(),
-                                            "Json parsing error: " + e.getMessage(),
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            });
-
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Search was unsucessful",Toast.LENGTH_LONG).show();
-            }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> headers = new HashMap<>();
-                    // Basic Authentication
-                    String accesstoken = "DR2CvgZx0jlvAx7HPdLT9Zv5GXNcyT-IdmmFpO88m1T20NtxX8fsUeJZGnuNhzr4S0fsbckQLupJSU1A8Nh7ZGUwXJ6GQA6Bo0nR3z_cSIsNQZZ3qr8_v-3hB03NX3Yx";
-                    headers.put("Authorization", "Bearer " + accesstoken);
-                    return headers;
-                }
-            };
-
-        queue.add(stringRequest);
-        }else{
-            // can't get location
-            // GPS or Network is not enabled
-            // Ask user to enable GPS/network in settings
-            gps.showSettingsAlert();
-        }
-
-    }
-
     //triggered on the bottom search button
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void yelpSearchCategory (String location, String category){
+    public void yelpSearchCategory (String location, String category, String name){
         Toast.makeText(getApplicationContext(), "Getting Areas in Category " + category + " around " + location, Toast.LENGTH_LONG).show();
 
             //Start of Volley Code
@@ -318,32 +148,33 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         String CategoryConverted;
         //converts the Spinner elements into readable text for the API search
         if(category.equals("Categories")){
-            Toast.makeText(getApplicationContext(), "Pick a Category", Toast.LENGTH_LONG).show();
+            //if a category wasn't picked, just don't search with a category
+            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&term=" + name;
         } else if(category.equals("Chinese (Restaurants)")) {
             //Toast.makeText(getApplicationContext(), "Chinese Was Selected", Toast.LENGTH_LONG).show();
             CategoryConverted = "chinese";
-            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted;
+            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted+ "&term=" + name;
         } else if(category.equals("Diners")){
             CategoryConverted = "diners";
-            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted;
+            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted+ "&term=" + name;
         }else if(category.equals("Electronics")){
             CategoryConverted = "electronics";
-            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted;
+            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted+ "&term=" + name;
         }else if(category.equals("Sporting Goods")){
             CategoryConverted = "sportgoods";
-            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted;
+            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted+ "&term=" + name;
         }else if(category.equals("Pet Stores (Pets)")){
             CategoryConverted = "petstore";
-            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted;
+            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted + "&term=" + name;
         }else if(category.equals("Orthodontists (Dentists)")){
             CategoryConverted = "orthodontists";
-            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted;
+            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted+ "&term=" + name;
         }else if(category.equals("Ice Cream And Frozen Yogurt (Food)")){
             CategoryConverted = "icecream";
-            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted;
+            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted+ "&term=" + name;
         }else if(category.equals("Bubble Tea (Food)")){
             CategoryConverted = "bubbletea";
-            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted;
+            urlSearch = "https://api.yelp.com/v3/businesses/search?location=" + location + "&categories=" + CategoryConverted+ "&term=" + name;
         }
 
             queue.start();
@@ -383,61 +214,69 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 resultAddress[0] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
 
 
+                                String total = jsonObj.getString("total");
                                 //second result
-                                business = businessJSON.getJSONObject(1);
-                                resultNames[1] = business.getString("name");
-                                resultRatings[1] = parseDouble(business.getString("rating"));
-                                coordinates = business.getJSONObject("coordinates");
-                                resultLat[1] = parseDouble(coordinates.getString("latitude"));
-                                resultLon[1] = parseDouble(coordinates.getString("longitude"));
-                                //resultPrice[1] = business.getString("price");
-                                resultPhone[1] = business.getString("phone");
-                                resultID[1] = business.getString("id");
-                                location = business.getJSONObject("location");
-                                resultAddress[1] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+                                if(parseInt(total) >= 3){
+                                    business = businessJSON.getJSONObject(1);
+                                    resultNames[1] = business.getString("name");
+                                    resultRatings[1] = parseDouble(business.getString("rating"));
+                                    coordinates = business.getJSONObject("coordinates");
+                                    resultLat[1] = parseDouble(coordinates.getString("latitude"));
+                                    resultLon[1] = parseDouble(coordinates.getString("longitude"));
+                                    //resultPrice[1] = business.getString("price");
+                                    resultPhone[1] = business.getString("phone");
+                                    resultID[1] = business.getString("id");
+                                    location = business.getJSONObject("location");
+                                    resultAddress[1] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+                                }
+
 
 
 
                                 //third result
-                                business = businessJSON.getJSONObject(2);
-                                resultNames[2] = business.getString("name");
-                                resultRatings[2] = parseDouble(business.getString("rating"));
-                                coordinates = business.getJSONObject("coordinates");
-                                resultLat[2] = parseDouble(coordinates.getString("latitude"));
-                                resultLon[2] = parseDouble(coordinates.getString("longitude"));
-                                //resultPrice[2] = business.getString("price");
-                                resultPhone[2] = business.getString("phone");
-                                resultID[2] = business.getString("id");
-                                location = business.getJSONObject("location");
-                                resultAddress[2] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
-
+                                if(parseInt(total) >= 4){
+                                    business = businessJSON.getJSONObject(2);
+                                    resultNames[2] = business.getString("name");
+                                    resultRatings[2] = parseDouble(business.getString("rating"));
+                                    coordinates = business.getJSONObject("coordinates");
+                                    resultLat[2] = parseDouble(coordinates.getString("latitude"));
+                                    resultLon[2] = parseDouble(coordinates.getString("longitude"));
+                                    //resultPrice[2] = business.getString("price");
+                                    resultPhone[2] = business.getString("phone");
+                                    resultID[2] = business.getString("id");
+                                    location = business.getJSONObject("location");
+                                    resultAddress[2] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") + " " + location.getString("zip_code") + " " + location.getString("country");
+                                }
 
                                 //fourth result
-                                business = businessJSON.getJSONObject(3);
-                                resultNames[3] = business.getString("name");
-                                resultRatings[3] = parseDouble(business.getString("rating"));
-                                coordinates = business.getJSONObject("coordinates");
-                                resultLat[3] = parseDouble(coordinates.getString("latitude"));
-                                resultLon[3] = parseDouble(coordinates.getString("longitude"));
-                                //resultPrice[3] = business.getString("price");
-                                resultPhone[3] = business.getString("phone");
-                                resultID[3] = business.getString("id");
-                                location = business.getJSONObject("location");
-                                resultAddress[3] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+                                if(parseInt(total) >= 5){
+                                    business = businessJSON.getJSONObject(3);
+                                    resultNames[3] = business.getString("name");
+                                    resultRatings[3] = parseDouble(business.getString("rating"));
+                                    coordinates = business.getJSONObject("coordinates");
+                                    resultLat[3] = parseDouble(coordinates.getString("latitude"));
+                                    resultLon[3] = parseDouble(coordinates.getString("longitude"));
+                                    //resultPrice[3] = business.getString("price");
+                                    resultPhone[3] = business.getString("phone");
+                                    resultID[3] = business.getString("id");
+                                    location = business.getJSONObject("location");
+                                    resultAddress[3] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") + " " + location.getString("zip_code") + " " + location.getString("country");
+                                }
 
                                 //fifth result
-                                business = businessJSON.getJSONObject(4);
-                                resultNames[4] = business.getString("name");
-                                resultRatings[4] = parseDouble(business.getString("rating"));
-                                coordinates = business.getJSONObject("coordinates");
-                                resultLat[4] = parseDouble(coordinates.getString("latitude"));
-                                resultLon[4] = parseDouble(coordinates.getString("longitude"));
-                                //resultPrice[4] = business.getString("price");
-                                resultPhone[4] = business.getString("phone");
-                                resultID[4] = business.getString("id");
-                                location = business.getJSONObject("location");
-                                resultAddress[4] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
-
+                                if(parseInt(total) >= 6){
+                                    business = businessJSON.getJSONObject(4);
+                                    resultNames[4] = business.getString("name");
+                                    resultRatings[4] = parseDouble(business.getString("rating"));
+                                    coordinates = business.getJSONObject("coordinates");
+                                    resultLat[4] = parseDouble(coordinates.getString("latitude"));
+                                    resultLon[4] = parseDouble(coordinates.getString("longitude"));
+                                    //resultPrice[4] = business.getString("price");
+                                    resultPhone[4] = business.getString("phone");
+                                    resultID[4] = business.getString("id");
+                                    location = business.getJSONObject("location");
+                                    resultAddress[4] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") + " " + location.getString("zip_code") + " " + location.getString("country");
+                                }
 
 
                                 yelpData.setResultNames(resultNames);
@@ -485,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     //Function that is called when the Category's GPS button is pressed
-    public void yelpSearchCategoryGPS(String category){
+    public void yelpSearchCategoryGPS(String category,String name){
         Toast.makeText(getApplicationContext(), "Getting Areas in Category " + category + " around your location", Toast.LENGTH_LONG).show();
 
         gps = new GPSTracker(MainActivity.this);
@@ -511,32 +350,33 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             String CategoryConverted;
             //converts the Spinner elements into readable text for the API search
             if(category.equals("Categories")){
-                Toast.makeText(getApplicationContext(), "Pick a Category", Toast.LENGTH_LONG).show();
+                //if a category wasn't picked, just don't search with a category
+                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&term=" + name;
             } else if(category.equals("Chinese (Restaurants)")) {
                 //Toast.makeText(getApplicationContext(), "Chinese Was Selected", Toast.LENGTH_LONG).show();
                 CategoryConverted = "chinese";
-                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted;
+                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted+ "&term=" + name;
             } else if(category.equals("Diners")){
                 CategoryConverted = "diners";
-                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted;
+                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted+ "&term=" + name;
             }else if(category.equals("Electronics")){
                 CategoryConverted = "electronics";
-                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted;
+                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted+ "&term=" + name;
             }else if(category.equals("Sporting Goods")){
                 CategoryConverted = "sportgoods";
-                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted;
+                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted+ "&term=" + name;
             }else if(category.equals("Pet Stores (Pets)")){
                 CategoryConverted = "petstore";
-                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted;
+                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted+ "&term=" + name;
             }else if(category.equals("Orthodontists (Dentists)")){
                 CategoryConverted = "orthodontists";
-                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted;
+                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted+ "&term=" + name;
             }else if(category.equals("Ice Cream And Frozen Yogurt (Food)")){
                 CategoryConverted = "icecream";
-                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted;
+                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted+ "&term=" + name;
             }else if(category.equals("Bubble Tea (Food)")){
                 CategoryConverted = "bubbletea";
-                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted;
+                urlSearch = "https://api.yelp.com/v3/businesses/search?&latitude=" + latitude + "&longitude=" + longitude + "&categories=" + CategoryConverted+ "&term=" + name;
             }
 
             queue.start();
@@ -575,63 +415,69 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 JSONObject location = business.getJSONObject("location");
                                 resultAddress[0] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
 
-
+                                String total = jsonObj.getString("total");
                                 //second result
-                                business = businessJSON.getJSONObject(1);
-                                resultNames[1] = business.getString("name");
-                                resultRatings[1] = parseDouble(business.getString("rating"));
-                                coordinates = business.getJSONObject("coordinates");
-                                resultLat[1] = parseDouble(coordinates.getString("latitude"));
-                                resultLon[1] = parseDouble(coordinates.getString("longitude"));
-                                //resultPrice[1] = business.getString("price");
-                                resultPhone[1] = business.getString("phone");
-                                resultID[1] = business.getString("id");
-                                location = business.getJSONObject("location");
-                                resultAddress[1] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+                                if(parseInt(total) >= 3){
+                                    business = businessJSON.getJSONObject(1);
+                                    resultNames[1] = business.getString("name");
+                                    resultRatings[1] = parseDouble(business.getString("rating"));
+                                    coordinates = business.getJSONObject("coordinates");
+                                    resultLat[1] = parseDouble(coordinates.getString("latitude"));
+                                    resultLon[1] = parseDouble(coordinates.getString("longitude"));
+                                    //resultPrice[1] = business.getString("price");
+                                    resultPhone[1] = business.getString("phone");
+                                    resultID[1] = business.getString("id");
+                                    location = business.getJSONObject("location");
+                                    resultAddress[1] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+                                }
+
 
 
 
                                 //third result
-                                business = businessJSON.getJSONObject(2);
-                                resultNames[2] = business.getString("name");
-                                resultRatings[2] = parseDouble(business.getString("rating"));
-                                coordinates = business.getJSONObject("coordinates");
-                                resultLat[2] = parseDouble(coordinates.getString("latitude"));
-                                resultLon[2] = parseDouble(coordinates.getString("longitude"));
-                                //resultPrice[2] = business.getString("price");
-                                resultPhone[2] = business.getString("phone");
-                                resultID[2] = business.getString("id");
-                                location = business.getJSONObject("location");
-                                resultAddress[2] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
-
+                                if(parseInt(total) >= 4){
+                                    business = businessJSON.getJSONObject(2);
+                                    resultNames[2] = business.getString("name");
+                                    resultRatings[2] = parseDouble(business.getString("rating"));
+                                    coordinates = business.getJSONObject("coordinates");
+                                    resultLat[2] = parseDouble(coordinates.getString("latitude"));
+                                    resultLon[2] = parseDouble(coordinates.getString("longitude"));
+                                    //resultPrice[2] = business.getString("price");
+                                    resultPhone[2] = business.getString("phone");
+                                    resultID[2] = business.getString("id");
+                                    location = business.getJSONObject("location");
+                                    resultAddress[2] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") + " " + location.getString("zip_code") + " " + location.getString("country");
+                                }
 
                                 //fourth result
-                                business = businessJSON.getJSONObject(3);
-                                resultNames[3] = business.getString("name");
-                                resultRatings[3] = parseDouble(business.getString("rating"));
-                                coordinates = business.getJSONObject("coordinates");
-                                resultLat[3] = parseDouble(coordinates.getString("latitude"));
-                                resultLon[3] = parseDouble(coordinates.getString("longitude"));
-                                //resultPrice[3] = business.getString("price");
-                                resultPhone[3] = business.getString("phone");
-                                resultID[3] = business.getString("id");
-                                location = business.getJSONObject("location");
-                                resultAddress[3] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
+                                if(parseInt(total) >= 5){
+                                    business = businessJSON.getJSONObject(3);
+                                    resultNames[3] = business.getString("name");
+                                    resultRatings[3] = parseDouble(business.getString("rating"));
+                                    coordinates = business.getJSONObject("coordinates");
+                                    resultLat[3] = parseDouble(coordinates.getString("latitude"));
+                                    resultLon[3] = parseDouble(coordinates.getString("longitude"));
+                                    //resultPrice[3] = business.getString("price");
+                                    resultPhone[3] = business.getString("phone");
+                                    resultID[3] = business.getString("id");
+                                    location = business.getJSONObject("location");
+                                    resultAddress[3] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") + " " + location.getString("zip_code") + " " + location.getString("country");
+                                }
 
                                 //fifth result
-                                business = businessJSON.getJSONObject(4);
-                                resultNames[4] = business.getString("name");
-                                resultRatings[4] = parseDouble(business.getString("rating"));
-                                coordinates = business.getJSONObject("coordinates");
-                                resultLat[4] = parseDouble(coordinates.getString("latitude"));
-                                resultLon[4] = parseDouble(coordinates.getString("longitude"));
-                                //resultPrice[4] = business.getString("price");
-                                resultPhone[4] = business.getString("phone");
-                                resultID[4] = business.getString("id");
-                                location = business.getJSONObject("location");
-                                resultAddress[4] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") +" "+location.getString("zip_code")  +" " + location.getString("country");
-
-
+                                if(parseInt(total) >= 6){
+                                    business = businessJSON.getJSONObject(4);
+                                    resultNames[4] = business.getString("name");
+                                    resultRatings[4] = parseDouble(business.getString("rating"));
+                                    coordinates = business.getJSONObject("coordinates");
+                                    resultLat[4] = parseDouble(coordinates.getString("latitude"));
+                                    resultLon[4] = parseDouble(coordinates.getString("longitude"));
+                                    //resultPrice[4] = business.getString("price");
+                                    resultPhone[4] = business.getString("phone");
+                                    resultID[4] = business.getString("id");
+                                    location = business.getJSONObject("location");
+                                    resultAddress[4] = location.getString("address1") + " " + location.getString("city") + "," + location.getString("state") + " " + location.getString("zip_code") + " " + location.getString("country");
+                                }
 
                                 yelpData.setResultNames(resultNames);
                                 yelpData.setResultRatings(resultRatings);

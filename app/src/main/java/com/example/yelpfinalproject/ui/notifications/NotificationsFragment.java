@@ -76,9 +76,27 @@ public class NotificationsFragment extends Fragment {
                 YelpData y = YelpData.getInstance();
 
                 //sets the Lat and Lon of the Map to the Current Lat and Current Lon determined by the GPS button on the search results
-                LatLng loc = new LatLng(y.getCurrentLat(),y.getCurrentLon());
+                LatLng loc = new LatLng(y.getResultLat()[0],y.getResultLon()[0]);
                 //sets the tag based on the Lat and Lon & makes the tag the location of the current business determined by the GPS button on the search results
-                googleMap.addMarker(new MarkerOptions().position(loc).title(y.getCurrentLocationName()));
+                googleMap.addMarker(new MarkerOptions().position(loc).title("1."+y.getResultNames()[0]));
+                if(y.getResultLat()[1] != 1){ //if a lat value exists in this data field
+                    loc = new LatLng(y.getResultLat()[1],y.getResultLon()[1]);
+                    googleMap.addMarker(new MarkerOptions().position(loc).title("2."+y.getResultNames()[1]));
+                }
+                if(y.getResultLat()[2] != 1){ //if a lat value exists in this data field
+                    loc = new LatLng(y.getResultLat()[2],y.getResultLon()[2]);
+                    googleMap.addMarker(new MarkerOptions().position(loc).title("3."+y.getResultNames()[2]));
+                }
+                if(y.getResultLat()[3] != 1){ //if a lat value exists in this data field
+                    loc = new LatLng(y.getResultLat()[3],y.getResultLon()[3]);
+                    googleMap.addMarker(new MarkerOptions().position(loc).title("4."+y.getResultNames()[3]));
+                }
+                if(y.getResultLat()[4] != 1){ //if a lat value exists in this data field
+                    loc = new LatLng(y.getResultLat()[4],y.getResultLon()[4]);
+                    googleMap.addMarker(new MarkerOptions().position(loc).title("5."+y.getResultNames()[4]));
+                }
+
+
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
                 googleMap.moveCamera(CameraUpdateFactory.zoomTo(12));
                 TileOverlay tileOverlay = googleMap.addTileOverlay(new TileOverlayOptions()
